@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import NextBtn from './NextBtn'
 
 
-const Onboarding = () => {
+export default Onboarding = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollx = useRef(new Animated.Value(0)).current
@@ -23,7 +23,7 @@ const Onboarding = () => {
 
 
   const scrollTo = async () => {
-    if (currentIndex) < slides.length - 1) {
+    if (currentIndex < slides.length - 1) {
       slidesRef.current.scrollToIndex({index: currentIndex +1});
     } else {
       try {
@@ -33,8 +33,8 @@ const Onboarding = () => {
       }
     }
 
+  
   }
-
 
   return (
     <View style={styles.container}>
@@ -58,13 +58,15 @@ const Onboarding = () => {
     </View>
     <View style={styles.page}>
     <Paginator data={slides} scrollx={scrollx}/>
-    <NextBtn/>
+    <NextBtn scrollTo={scrollTo} percentage={(currentIndex +1) * (100 / slides.length)}/>
     </View>
     </View>
   )
 }
 
-export default Onboarding
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -74,8 +76,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   
-
-
   page: {
     width: 100,
     // height: 100,
