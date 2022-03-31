@@ -6,19 +6,20 @@ import OnboardingItem from './OnboardingItem'
 import Paginator from './Paginator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NextBtn from './NextBtn'
+import ButtonForLogin from './ButtonForLogin'
 
 
 export default Onboarding = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const scrollx = useRef(new Animated.Value(0)).current
+  const slidesRef =useRef(null)
 
   const viewableitemsChanged = useRef(({ viewableItems }) => {
     setCurrentIndex(viewableItems[0].index)
   }).current
 
-    const slidesRef =useRef(null)
-
+   
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current
 
 
@@ -28,6 +29,7 @@ export default Onboarding = () => {
     } else {
       try {
           await AsyncStorage.setItem('@viewedOnboarding', 'true')
+       
       } catch (error) {
         console.log("error @scrollTo: ", error)
       }
@@ -59,6 +61,7 @@ export default Onboarding = () => {
     <View style={styles.page}>
     <Paginator data={slides} scrollx={scrollx}/>
     <NextBtn scrollTo={scrollTo} percentage={(currentIndex +1) * (100 / slides.length)}/>
+      {/* <ButtonForLogin/> */}
     </View>
     </View>
   )
@@ -81,7 +84,8 @@ const styles = StyleSheet.create({
     // height: 100,
     // flex: 1,
     paddingTop: 50,
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor:'green',

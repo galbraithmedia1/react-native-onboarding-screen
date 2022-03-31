@@ -4,7 +4,19 @@ import { useState, useEffect } from "react";
 import Onboarding from "./components/onboarding/Onboarding";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createStackNavigator } from "@react-navigation/stack";
+
 import Home from "./components/Home/Home";
+import LoginPage from'./components/login/Login';
+
+// const Stack = createStackNavigator({
+//   Home: Home,
+//   Onboarding: Onboarding,
+//   LoginPage: LoginPage
+
+// });
+
 
 const Loading = () => {
   return (
@@ -16,7 +28,7 @@ const Loading = () => {
 };
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [viewedOnboarding, setViewedOnboarding] = useState(false);
 
   const checkOnboarding = async () => {
@@ -27,7 +39,7 @@ export default function App() {
         setViewedOnboarding(true);
       }
     } catch (error) {
-      console.log("error @cheOnboarding: ", error);
+      console.log("error @viewedOnboarding: ", error);
     } finally {
       setLoading(false);
     }
@@ -35,11 +47,12 @@ export default function App() {
 
   useEffect(() => {
     checkOnboarding();
-  }, []);
+  }, [viewedOnboarding]);
 
   return (
     <View style={styles.container}>
       {loading ? <Loading /> : viewedOnboarding ? <Home /> : <Onboarding />}
+      {/* <Onboarding/> */}
       
       <StatusBar style="auto" />
     </View>

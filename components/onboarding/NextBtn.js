@@ -1,9 +1,9 @@
-import { StyleSheet, View, TouchableOpacity , Animated} from "react-native";
+import { StyleSheet, View, TouchableOpacity, Animated } from "react-native";
 import Svg, { G, Circle } from "react-native-svg";
 import React, { useEffect, useRef } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-const NextBtn = ({ percentage }) => {
+const NextBtn = ({ percentage, scrollTo }) => {
   const size = 128;
   const stokeWidth = 2;
   const center = size / 2;
@@ -16,7 +16,7 @@ const NextBtn = ({ percentage }) => {
   const animation = (toValue) => {
     return Animated.timing(progressAnimation, {
       toValue,
-      duratin: 250,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
@@ -27,14 +27,13 @@ const NextBtn = ({ percentage }) => {
 
   useEffect(() => {
     progressAnimation.addListener(
-      ({ value }) => {
-        const strokeDashoffset = circumference - (circumference * value) / 100;
-        if (progressRef.current) {
-          {
-            progressRef.current.setNativeProps({
-              strokeDashoffset,
-            });
-          }
+      (value) => {
+        const strokeDashoffset =
+          circumference - (circumference * value.value) / 100;
+        if (progressRef?.current) {
+          progressRef.current.setNativeProps({
+            strokeDashoffset,
+          });
         }
       },
       [percentage]
@@ -42,7 +41,7 @@ const NextBtn = ({ percentage }) => {
   });
 
   return (
-    <View>
+    <View style={styles.container}>
       <Svg width={size} height={size}>
         <G rotation="-90" orgin={center}>
           <Circle
@@ -53,7 +52,7 @@ const NextBtn = ({ percentage }) => {
             strokeWidth={stokeWidth}
           />
           <Circle
-            stroke="#E6E7E8"
+            stroke="#F4338F"
             cx={center}
             ref={progressRef}
             cy={center}
@@ -63,7 +62,7 @@ const NextBtn = ({ percentage }) => {
           />
         </G>
       </Svg>
-      <TouchableOpacity style={styles.button} activeOpascity={0.6}>
+      <TouchableOpacity onPress={scrollTo} style={styles.button} activeOpacity={0.6}>
         <AntDesign name="arrowright" size={32} color="#E6E7E8" />
       </TouchableOpacity>
     </View>
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    backgroundColor: "#f4338f",
+    backgroundColor: "#32BBCB",
     borderRadius: 100,
     padding: 20,
   },

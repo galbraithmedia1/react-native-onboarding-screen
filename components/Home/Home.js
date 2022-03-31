@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native'
 import React from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -6,7 +6,7 @@ const Home = () => {
 
     const clearOnboarding = async () => {
         try {
-            await AsyncStorage.setItem('@viewedOnboarding', 'true')
+            await AsyncStorage.removeItem('@viewedOnboarding')
         } catch (error) {
             console.log("error @clearOnboarding: ", error)
         }
@@ -18,6 +18,11 @@ const Home = () => {
         <Text>Clear Onboarding</Text>
 
       </TouchableOpacity>
+      {/* <Button 
+      title='Go to Login'
+        onPress={() => navigation.navigate('LoginPage')}
+      /> */}
+      
     </View>
   )
 }
